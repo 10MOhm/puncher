@@ -1,0 +1,27 @@
+$text-color              : white;
+$text-light-color        : white;
+$hover-color             : white;
+$disabled                : #ccc;
+$machine-width           : 450px;
+$machine-height          : 200px;
+$machine-background-color: #333;
+$toolbar-height          : 20px;
+$background-color        : #333;
+$border-color            : black;
+$inner-shadow-color      : rgba(0,0,0,0.5);
+$inner-light-color       : rgba(255,255,255,0.2);
+$box-light-color         : #0062A8;
+$top-button-color        : #333;
+$bottom-button-color     : #111;
+$button-color            : #222;
+$active-button-color     : #0062A8;
+$puncher-section-size    : 130px;
+
+@mixin beveled {
+    background-color: $active-button-color;
+    background:linear-gradient(210deg, transparent 30px, $active-button-color 20px);
+    background-size: 95% 100%;
+    background-repeat:no-repeat;
+    padding: 8px 5px;
+    color: white;
+}

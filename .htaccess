@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /htdocs
+
+RewriteCond %{HTTPS} off
+RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule .* - [L]
+
+RewriteCond $1 !^(img|phpmyadmin|index\.php|css|captcha|images|fonts|js)
+RewriteRule ^(.*)$ index.php/$1 [PT]
+
+RewriteRule ^(css|img|images|fonts|js)/(.*)$ $1/$2 [PT]

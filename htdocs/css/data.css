@@ -1,0 +1,28 @@
+/* line 2, ../sass/data.scss */
+#data #export {
+  margin: 10px;
+  margin-top: 20px;
+  padding: 10px;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+}
+/* line 11, ../sass/data.scss */
+#data td:first-child {
+  width: 45% !important;
+}
+/* line 15, ../sass/data.scss */
+#data p {
+  margin: 15px 10px;
+  text-align: justify;
+  line-height: 1.2em;
+}
+/* line 20, ../sass/data.scss */
+#data p.beveled-bg {
+  margin: 0;
+  margin-bottom: 10px;
+}
+/* line 25, ../sass/data.scss */
+#data #data-table {
+  margin-bottom: 10px;
+}

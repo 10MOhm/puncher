@@ -1,0 +1,16 @@
+#preferences {
+    p.beveled-bg {
+        margin-bottom: 15px;
+    }
+
+    input {
+        margin-left: 10px;
+        text-align: center;
+        text-indent: 0;
+    }
+    input[type="submit"] {
+        float: right;
+        margin-top: -5px;
+        font-size: 1em;
+    }
+}

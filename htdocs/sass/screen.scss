@@ -1,0 +1,62 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "style.scss";
+
+@media only screen and ( max-width: 450px )    {
+    body {padding-top: 0; background: url(../images/escheresque_ste.png);}
+    #machine, #oi-machine {
+        border-radius: 0px; 
+        margin: 0;
+        box-shadow: none;
+    }
+    #oi-machine {margin: 0;} 
+    #machine #tools-container li {
+        a {
+	        border-radius: 0 !important;
+	        font-size: 0em;
+	        background-position: center;
+	        background-repeat: no-repeat; 
+        }
+    }
+    #content, #oi-content {border-radius: 0; margin-bottom: 0; border: none; background: none;}
+    #stats-button { 
+        background-image: url(../images/stats.png) !important;
+        &.active, &:hover {background-image: url(../images/stats-on.png) !important;}
+    }
+    #punches-button { 
+        background-image: url(../images/punches.png) !important;
+        &.active, &:hover {background-image: url(../images/punches-on.png) !important;}
+    }
+    #pref-button { 
+        background-image: url(../images/pref.png) !important;
+        &.active, &:hover {background-image: url(../images/pref-on.png) !important;}
+    }
+    #data-button { 
+        background-image: url(../images/data.png) !important;
+        &.active, &:hover {background-image: url(../images/data-on.png) !important;}
+    }
+    #content .stats thead th p.left {width: 95%;}
+        
+	.mutli-button-holder {
+	    display: block;
+	    width: 100%;
+	    text-align: center;
+	    
+	    a {width: 23%; padding: 7px 0 !important;}
+	}
+	
+	ul#navigation {
+	   position: static;
+	   width: auto;
+	   
+	   li { display: block; text-align: left;}
+	   a {padding: 10px 5px !important;}
+	}
+	
+}
+
+@media only screen and ( min-width: 450px )    {
+    #machine #tools-container #tools li:first-child a {
+        border-left: none;
+    }
+}

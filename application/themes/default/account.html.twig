@@ -1,0 +1,10 @@
+{% extends "_layouts/other_info.html.twig" %}
+
+{% block content %}
+	<h1>Gestion du compte</h1>
+	<ul id="account">
+	   <li><a href="/auth/change_email/">Changer mon email</a></li>
+	   <li><a href="/auth/change_password/">Changer mon mot de passe</a></li>
+	   <li><a href="/auth/unregister/" class="danger">Supprimmer mon compte</a></li>
+	</ul>
+{% endblock %}

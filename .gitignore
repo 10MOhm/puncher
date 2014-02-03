@@ -1,0 +1,10 @@
+/.buildcomplete
+.sass-cache
+/.pydevproject
+/.project
+/time_manager.mwb.bak
+.project
+.buildpath
+.settings
+log-*.php
+/test_db_exports

@@ -1,0 +1,113 @@
+{#
+
+	This screen allows the user to change the time of checks in a day,
+	add and remove them. This feature is extra useful when you miss a check
+	or can't check in because you're at a meeting or don't have network access
+
+#}
+{% extends _layout %}
+
+{% block head %}
+    <script type="text/javascript" src="/js/punches.js"></script>
+{% endblock %}
+
+
+{% block content %}
+
+{% if validation_errors() is not empty %}
+<div class="wrong">
+    {{ validation_errors() }}
+</div>
+{% endif %}
+
+{% if success == true %}
+<div class="success">
+    <p>Vos modifications ont bien été enregistrées</p>
+</div>
+{% endif %}
+
+<div id="punches">
+    {% if checks is not empty %}
+        <div id="checks-nav-button">
+            <a href="" id="previous">&lt;&lt;</a>
+            <a href="" id="next">&gt;&gt;</a>
+        </div>
+
+        <form id="punches-form" method="post" action="/punches">
+        
+            {# Foreach day #}
+            {% for date, day_checks in checks %}
+            
+            <div class="day">
+                
+                <p class="check_date">{{ date }}</p>
+                
+                <div class="inputs_holder">
+                    <table class="inputs">
+                        {# Foreach check in a day #}
+                        {% for key, check in day_checks %}
+                        <tr class="check_time">
+                            
+                            <td>
+                                {# Check Type Label #}
+                                {% if check.check_in %}
+                                    <p>Check In</p>
+                                {% else %}
+                                    <p>Check Out</p>
+                                {% endif %}
+                            </td>
+                            
+                            <td class="fields">
+                                {# Hour Field #}
+                                {% set hour_field_name = no_slash(date) ~ '_hour_' ~ key %}
+                                <input type="text" 
+                                    name="{{ hour_field_name }}"
+                                    id="{{ hour_field_name }}" 
+                                    value="{{ check.hour }}" maxlength="2" size="2"
+                                    class="hour {{ has_errors(form_error(hour_field_name)) }}"
+                                />
+                                    
+                                <label for="{{ hour_field_name }}">h</label>
+                                
+                                {# Minute Field #}
+                                {% set min_field_name = no_slash(date) ~ '_minute_' ~ key %}
+                                <input type="text" 
+                                    name="{{ min_field_name }}"
+                                      id="{{ min_field_name }}" 
+                                    value="{{ check.minute }}" maxlength="2" size="2"
+                                    class="minute {{ has_errors(form_error(min_field_name)) }}" 
+                                />
+                                    
+                                <label for="{{ no_slash(date) }}_minute_{{ check.id }}">min</label>
+                            </td>
+                            
+                            <td>
+                                {# Delete #}
+                                {% set delete_field_name = no_slash(date) ~ '_delete_' ~ key %}
+                                <input type="checkbox"
+                                    name="{{ delete_field_name }}"
+                                    id="{{ delete_field_name }}" 
+                                    class="delete"
+                                />
+                                    
+                                <label for="{{ delete_field_name }}">X</label>
+                            </td>
+                        </tr>		
+                        {% endfor %}
+                        <tr><td colspan="3" style="padding: 0;"><a href="" class="button add">+</a></td></tr>
+                    </table>
+                </div>
+            </div>
+            
+            {% endfor %}
+            
+            <input type="reset" value="Réinitialiser" />
+            <input type="submit" value="Modifier" />
+            
+            <div style="clear: both;"></div>
+        </form>
+    {% else %}
+        Vous n'avez effectué aucun pointage pour l'instant
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Meta data -->
+		<meta charset="utf-8" />
+		<title>{% block title %}Puncher{% endblock %}</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" media="screen" href="/css/screen.css" />
+        <!--[if lt IE 9]>
+		<link rel="stylesheet" href="/css/ie.css">
+		<![endif]-->
+        
+        <script type="text/javascript" src="/js/lib/jquery-1.9.0.js"></script>
+        <script type="text/javascript" src="/js/utils.js"></script>
+		{% block head %}
+		{% endblock %}
+	</head>
+	<body>
+		<div id="wrapper" class="{{checked_in}} other-info ">
+            <div id="oi-machine" class="has_light">
+                <a id="puncher-button" href="/" title="Accueil">
+                    <span>&#xF011;</span> Puncher !
+                </a>
+            </div>
+            <div id="oi-content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            
+            <ul id="navigation">        
+	            <!--[if lt IE 10]>
+				<li class="left" style="float: left; padding: 10px; color: #CCC">
+					L'auteur de ce site vous déconseille l'utilisation d'internet explorer en version inférieure à 10.
+				</li>
+				<![endif]--><!-- whitespace
+				{% for url, name in navigation_items %}
+                    --><li><a href="{{ url }}">{{ name }}</a></li><!-- whitespace
+                {% endfor %}
+                -->
+            </ul>
+        </div>
+	</body>
+</html>

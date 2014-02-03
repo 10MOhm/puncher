@@ -1,0 +1,16 @@
+/* line 2, ../sass/preferences.scss */
+#preferences p.beveled-bg {
+  margin-bottom: 15px;
+}
+/* line 6, ../sass/preferences.scss */
+#preferences input {
+  margin-left: 10px;
+  text-align: center;
+  text-indent: 0;
+}
+/* line 11, ../sass/preferences.scss */
+#preferences input[type="submit"] {
+  float: right;
+  margin-top: -5px;
+  font-size: 1em;
+}

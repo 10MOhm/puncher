@@ -1,0 +1,97 @@
+{% extends _layout %}
+
+{% block head %}
+    <script type="text/javascript" src="/js/stats.js"></script>
+    
+    {% if stats.overtime_evolution is not null %}
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	    <script type="text/javascript">
+	      google.load("visualization", "1", {packages:["corechart"]});
+	      google.setOnLoadCallback(drawChart);
+	      
+	      function drawChart() {
+	        var data = google.visualization.arrayToDataTable({{ stats.overtime_evolution|json_encode }});
+	
+	        var options = {
+	          backgroundColor: { fill:'transparent' },
+	          hAxis: {textStyle: {color: '#ccc'}, gridlines: {color: '#ccc'}},
+	          vAxis: {textStyle: {color: '#ccc'}},
+	          legend: {textStyle: {color: '#FFF'}},
+	          chartArea: {left: 50, height: '75%'},
+	          tooltip: {textStyle: {color: '#000'}}
+	        };
+	
+	        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	        chart.draw(data, options);
+	      }
+	    </script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<table class="stats">
+	<thead>
+		<tr>
+			<th colspan="2">
+				<p class="beveled-bg">Aujourd'hui</p>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Temps Passé&nbsp;:</td>
+			<td>{{stats.time_spent}}</td>
+		</tr>
+		<tr>
+			<td><strong>Temps Restant&nbsp;:</strong></td>
+			<td><strong>{{stats.time_left}}</strong></td>
+		</tr>
+		<tr>
+			<td>Heure de fin&nbsp;:</td>
+			<td>{{stats.end_time}}</td>
+		</tr>
+	</tbody>
+	<thead>
+		<tr>
+			<th colspan="2">
+				<p class="beveled-bg left">Par période</p>
+				<div class="mutli-button-holder">
+				    <div>
+						<a class="multi-button">Jour</a><!-- whitespace
+					 --><a class="multi-button">Semaine</a><!-- whitespace
+					 --><a class="multi-button">Mois</a><!-- whitespace
+					 --><a class="multi-button active">Tout</a>
+				    </div>
+				</div>
+			</th>
+		</tr>
+	</thead>
+	
+	{% for period_name, period in stats.periods %}
+		<tbody class="{{ period_name }} period">
+			<tr>
+				<td>Heures sup&nbsp;:</td>
+				<td>{{period.overtime}}</td>
+			</tr>
+			<tr>
+				<td>Temps passé&nbsp;:</td>
+				<td>{{period.time_spent}}</td>
+			</tr>
+			<tr>
+				<td><strong>Heure de fin&nbsp;:</strong></td>
+				<td><strong>{{period.end_time}}</strong></td>
+			</tr>
+			<tr>
+				<td>Jours travaillés&nbsp;:</td>
+				<td>{{period.days_worked}}</td>
+			</tr>
+		</tbody>
+	{% endfor %}
+	
+</table>
+
+{% if stats.overtime_evolution is not null %}
+	<p class="beveled-bg">Evolution des heures supplémentaires</p>
+	<div id="chart_div"></div>
+{% endif %}
+{% endblock %}

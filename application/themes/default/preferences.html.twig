@@ -1,0 +1,33 @@
+{% extends _layout %}
+{% block content %}
+
+	{% if must_fill %}
+		<p class="warning">Avant toute utilisation, vous devez saisir vos préférences. Sans elles, l'application ne peut calculer correctement ses statistiques.</p>
+	{% endif %}
+	
+	<form id="preferences" method="post" action="/preferences">
+	    <p class="beveled-bg">Heures / Jour</p>
+	
+		{% if validation_errors() is not empty %}
+		<div class="wrong">
+		    {{ validation_errors() }}
+		</div>
+		{% endif %}
+		{% if success == true %}
+		<div class="success">
+		    <p>Vos préférences ont bien été enregistrées</p>
+		</div>
+		{% endif %}
+	        
+	    <!-- HEURES -->
+	    <input type="text" id="hours" name="hours" size="2" maxlength="2" 
+	            value="{{ hours }}" class="{{ has_errors(form_error('hours')) }}" />
+	    <label for="hours">h</label>
+	    
+	    <!-- MINUTES -->
+	    <input type="text" id="minutes" name="minutes" size="2" maxlength="2" 
+	            value="{{ minutes }}" class="{{ has_errors(form_error('minutes')) }}" />
+	    <label for="hours">min</label>
+	    <input type="submit" value="Enregistrer" />
+	</form>
+{% endblock %}

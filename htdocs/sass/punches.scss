@@ -1,0 +1,67 @@
+#punches {
+	
+	#checks-nav-button {
+		a#previous {
+            float: left;
+            border-radius: 10px 0 0 0;
+        }
+		a#next {
+            float: right;
+            border-radius: 0 10px 0 0;
+        }
+		a { padding: 10px; }
+	}
+	
+	.check_date {
+	   text-align: center;
+	   padding: 10px 0;    
+       background: $button-color;
+	   @include background-image(linear-gradient(top, $top-button-color, $bottom-button-color));
+	   color: white;
+	   border: 1px solid $border-color;
+	   border-radius: 10px 10px 0 0;
+    }
+	
+	table.inputs {
+	   width: 100%;
+	   border: 1px solid $border-color;
+	   border-top: none;
+	   border-bottom: none;
+	   
+       tr:nth-child(2n - 1) {
+           background: #1C1C1C;
+       }
+       
+       tr:hover {
+            @extend .has_back;
+       }
+       
+	   td {
+	       padding: 5px;
+	       
+	       input {
+	           margin-left: 10px;
+	       }
+	   }
+	   td a.button.add {
+	       padding: 5px 0;
+	       width: 100%;
+	       display: block;
+	       text-align: center;
+	       border-width: 1px 0 1px 0;
+	       background: none;
+	   }
+   }
+   
+	input[type="submit"], input[type="reset"] {
+	    margin: 0;
+        width: 50%;
+        float: left;
+        border-radius: 0 0 10px 0;
+        border-left: 0;
+	}
+    input[type="reset"] {
+        border-left: 1px solid $border-color;
+        border-radius: 0 0 0 10px;
+    }
+}

@@ -1,0 +1,53 @@
+{% extends _layout %}
+
+{% block head %}
+  	<link rel="stylesheet" href="/css/jquery-ui.css">
+  	<script type="text/javascript" src="/js/data.js"></script>
+{% endblock %}
+
+{% block content %}
+
+{% if export_needed %}
+	<p class="warning">Vous devez exporter vos pointages</p>
+{% endif %}
+
+<div id="data">
+	<p class="beveled-bg">Etat</p>
+	<table id="data-table">
+	  <tr>
+	    <td>Nombre de pointages&nbsp;: </td>
+	    <td>{{ data_info.number_of_checks }}</td>
+	  </tr>
+	  <tr>
+	    <td>Pourcentage du mois terminé : </td>
+	    <td><div id="progressbar"><div class="progress-label">{{ data_info.percent_month }}%</div></div></td>
+	  </tr>
+	</table>
+	
+	<p class="beveled-bg">Export</p>
+	<p>
+		Pour limiter la taille utilisée par l'application, <strong>vos pointages ne sont conservés que pendant un mois.</strong>
+	</p>
+	<p>
+		Tous les mois, il vous sera donc proposé d'<strong>exporter vos pointages</strong> (au format Excel CSV).
+		Le fichier contiendra tous vos pointages et les temps passés entre ceux-ci.
+		Ainsi vous pourrez facilement recalculer les statistiques fournies par l'application.
+	</p>
+	<p>
+		Lors de l'export de vos données, votre nombre d'heures supplémentaires est sauvegardé en base de données.
+		Vos pointages quant à eux, sont supprimmés. Veillez bien à conserver les fichiers d'export, un duplicata ne
+		pourra pas vous être donné.
+	</p>
+	<a href="/export" target="blank" id="export" class="button">Exporter les pointages du mois</a>
+</div>
+
+<div id="dialog-confirm" title="Vidage des pointages">
+  	<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+	<p>
+  		Attention, en exportant les pointages, ils seront supprimmés de la 
+		base de données. Gardez précieusement ce fichier, un duplicata ne 
+		pourra vous être fourni.
+	</p>
+</div>
+
+{% endblock %}

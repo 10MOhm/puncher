@@ -1,0 +1,122 @@
+.other-info {
+	
+	#oi-content {
+	    h1 {
+	        @extend .beveled-bg;
+	        margin: 1em 0 1em;
+	        &:first-child { margin-top: 0;}
+	    }
+	    h2 {
+	        @extend strong;
+	        margin: 1em 0.7em 0.5em;
+	    }
+	    
+	    ul { 
+	        margin: 0 0 0 2em;
+	        
+	        li {
+	            list-style: disc;
+	            margin-bottom: 0.3em;
+	        }
+	    }
+	    
+	    ul#account {
+	       margin: 0;
+	       
+	       li { 
+	           list-style: none;
+	           margin: 20px 0;  
+	           
+	           a {
+	               width: 100%; 
+	               display: block; 
+	               text-align: center; 
+	               padding: 10px 0;
+	               border-radius: 10px;
+               }
+           }
+	    }
+	    
+	    a.no-button, a.no-button:hover {
+	        border: none !important;
+	        background: none !important;
+	        text-decoration: underline !important;
+	        box-shadow: none !important;
+	    }
+	    
+	    .form-wrapper {
+	        padding: 0 20px;
+	        margin-bottom: 20px;
+	        
+	        table { 
+	           width: 100%;
+	           margin: 20px 0;
+	           
+	           input {width: 100%;}
+	           
+	           td {
+	                padding: 2px 0;
+	                
+	                input {
+	                    text-indent: 5px;
+	                    text-align: left;
+	                }
+	                
+	                &.wrong {
+	                    background: none;
+	                    border: none;
+	                    input {
+	                        @extend input.wrong;
+	                    }
+	                }
+	           }
+	        }
+	        .left { 
+	           float: left;
+	           margin: 5px 0 10px; 
+	        }
+	        .right {
+	/*         float: right;            */
+	           text-align: right;
+	           a {
+	               @extend .multi-button;
+	/*             margin-top: 5px; */
+	           }
+	        }
+	    }
+	}
+
+
+	
+	#puncher-button {
+		&:hover {
+		    box-shadow: none;
+		    background: none !important;
+		}
+	    span {
+	        font-family: "FontAwesome";
+	        font-style: normal;
+	        font-size: 3em;
+	    }
+	    font-family: sans-serif;
+	    font-size: 3em;
+	    font-style: italic;
+	    margin: auto;
+	    display: block;
+	    text-align: center; 
+	    padding-top: 20px;
+	    border-radius: 20px;
+        background: none !important;
+        border: none;
+	}
+	
+	.buttons-bar {
+	    width: 100%;
+	    
+	    input {
+	       display: block;
+	       width: 100%;
+	       height: 100%;
+	    }
+	}
+}

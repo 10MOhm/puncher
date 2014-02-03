@@ -1,0 +1,273 @@
+@import "variables.scss";
+
+/** Font-Face **/
+@font-face {
+  font-family: "FontAwesome";
+  src: url("../fonts/fontawesome-webfont.eot");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix") format('eot'),
+           url("../fonts/fontawesome-webfont.woff") format('woff'),
+           url("../fonts/fontawesome-webfont.ttf") format('truetype'),
+           url("../fonts/fontawesome-webfont.svg#FontAwesome") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 0.9em;
+	padding-top: 20px;
+	color: $text-color;
+	background: url(../images/micro_carbon.png);	
+}
+	
+#machine, #oi-machine {
+	max-width: $machine-width;
+	margin: 35px auto 0;
+	background: $button-color;
+	@include background-image(linear-gradient(top, $top-button-color, $bottom-button-color));
+	border-radius: 20px;
+	border: 1px solid $border-color;
+	border-bottom-width: 5px;
+    z-index: 1000;	
+	 
+}
+@import "other-info.scss";
+#machine {
+    height: $machine-height;
+	
+	#puncher-container {
+		height: $machine-height * 0.80 - 1px;
+		border-bottom: 1px solid $border-color;
+		font-family: "FontAwesome";
+		      
+		section#puncher-section {
+			background: url(../images/micro_carbon.png);
+			border-radius: 100px; 
+			border: 1px solid $border-color; 
+			height: $puncher-section-size; 
+			width: $puncher-section-size; 
+			@include box-shadow( inset 0px 3px 0px $border-color);
+			margin: auto;
+			position: relative;
+			top: 15px;
+			
+            #knob-wrapper {
+                position: absolute;
+            }
+			canvas {margin: 1px 0;}
+		}
+	
+		a#puncher-button { 
+			border-radius: 100px;
+			border: 1px solid $border-color; 
+			font-size: 6em;
+			display: block;
+			width: $puncher-section-size - 30px;
+			height: $puncher-section-size - 30px;
+			margin: 15px 14px;
+			color: #888;
+            @include text-shadow($top-button-color 0px 3px 2px, $bottom-button-color 0px -2px 1px ); 
+            position: absolute;
+			
+			&:hover, .checked_in & {
+                // background: $active-button-color;
+			    @include text-shadow(0 0 10px $text-light-color);
+			    color: $hover-color;
+			}
+			span {
+			    display: block;
+			    padding: 15px 19px;
+			}
+		}
+	}
+	
+    #tools-container {
+		display: table;
+		width: 100%;
+		
+		#tools {
+		    display: table-row;
+        
+	        li {
+	            display: table-cell;
+	            font-size: 1.2em;
+	            
+	            a {
+	                height: $machine-height * 0.20 - 10px;
+	                display: block;
+	                text-align: center;
+	                padding-top: 10px;
+                    border-left: 1px solid $border-color;
+	            }
+	            
+                &:first-child a {border-radius: 0 0 0 15px;}
+                &:last-child a {border-radius: 0 0 15px 0;}
+	        }
+		}
+	}
+}
+
+#content, #oi-content {
+	background: url(../images/escheresque_ste.png);
+	max-width: $machine-width - 60px;
+	min-height: 200px;
+	margin: 0 auto 20px;
+	padding: 10px;
+	padding-top: 15px;
+	border-radius: 0 0 20px 20px;
+	border: 1px solid $border-color;
+	border-bottom-width: 3px;
+	border-top: none;
+	color: $disabled;
+    position: relative;
+    top: -2px;
+	
+	@import "stats.scss";
+	@import "preferences.scss";
+    @import "punches.scss";
+    @import "data.scss";
+}
+
+ul#navigation {
+
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	text-align: right;
+	border-bottom: 2px solid $border-color;
+	
+	li {
+	    display: inline-block;
+	    border-left: $border-color 1px solid;
+           a {
+               padding: 10px 15px;
+               display: block;
+           }
+    }
+}
+    
+#content a, #oi-content a, #puncher-container a, #navigation, .other-info #oi-content a, input[type="submit"], input[type="reset"] {
+    background-color: $button-color;
+    @include background-image(linear-gradient(top, $top-button-color, $bottom-button-color));
+    border: 1px solid $border-color;
+}
+a, a:focus, a:visited, input[type="submit"], input[type="reset"] {
+    color: $disabled;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input {
+    border-radius: 10px;
+    text-align: center;
+}
+
+input[type="submit"], input[type="reset"] {
+	padding: 7px 9px;
+}
+
+a:hover, a.active, input[type="submit"]:hover, input[type="reset"]:hover {	
+    @extend .has_back;
+    
+    color: $hover-color;
+    @include text-shadow(0 0 10px $text-light-color);
+    @include box-shadow(inset 0 2px 3px $inner-shadow-color, inset 0 -2px 3px $inner-light-color);
+}
+
+.multi-button {
+    padding: 5px 7px;
+    border-right: none !important;
+    display: inline-block;
+    z-index: 0;
+    
+    &:first-child {
+       border-radius: 10px 0 0 10px;
+       padding-left: 10px;
+    }
+    &:last-child {
+       border-radius: 0 10px 10px 0;
+       border-right: 1px solid $border-color;
+    }
+}
+
+$bg-orange: #DC7000;
+$bg-red: #CB0000;
+
+.beveled-bg {
+    background-color: #1C1C1C;
+    background:linear-gradient(210deg, transparent 26px, #1C1C1C 20px);
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    padding: 8px;
+    color: white;
+    border-left: 4px solid $active-button-color;
+    border-bottom: 1px solid $active-button-color;
+    line-height: 1em !important;
+    
+    .overtime.checked_in & { border-color: $bg-orange;}
+    .overtime_absolute.checked_in & { border-color: $bg-red;} 
+}
+
+.charts-tooltip {
+    color: black;	
+}
+
+strong {
+	font-weight: bold;
+    color: #0095FF;
+    .overtime.checked_in & { color: #FF9500 !important;}
+    .overtime_absolute.checked_in & { color: #FF0000 !important;}
+}
+
+.success {
+	@extend .beveled-bg;
+	margin: 0 0 15px;
+	border-color: #0C0;
+    background: #1C1C1C;
+}
+
+.wrong {
+	@extend .success;
+    border-color: #C00;
+}
+
+.message {
+	@extend .success;
+    border-color: #F90;
+    &:first-child { margin-top: 0px;}
+}
+
+input.wrong {
+	margin: 0; 
+	padding: 2px 1px; 
+	background: white; 
+	color: red; 
+	border-color: red;
+	font-weight: bold;
+	border-style: solid;
+}
+
+.has_light {
+    .checked_in & { @include box-shadow(0 0 30px #0095FF);}
+    .overtime.checked_in & { @include box-shadow(0 0 30px #FF9500);}
+    .overtime_absolute.checked_in & { @include box-shadow(0 0 30px #FF0000);}
+}
+.has_back {
+    background-color: #0062A8 !important;
+    .checked_in &, &.active, &:hover { background-color: #0062A8 !important; background-image: none !important;}
+    .overtime.checked_in & { background-color: $bg-orange !important;}
+    .overtime_absolute.checked_in & { background-color: $bg-red !important;}
+}
+
+
+/*##############################################################*/
+
+.error {
+	td {
+	    color: red;
+	    padding: 10px 0 5px !important;
+	    &:first-child {
+            padding: 0 0 5px !important;
+	    }
+	}
+}
