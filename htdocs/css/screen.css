@@ -213,10 +213,16 @@ body {
   width: 100%;
 }
 /* line 116, ../sass/other-info.scss */
-.other-info .buttons-bar input {
+.other-info .buttons-bar input, .other-info .buttons-bar a {
   display: block;
   width: 100%;
   height: 100%;
+}
+/* line 122, ../sass/other-info.scss */
+.other-info .buttons-bar a {
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 5px;
 }
 
 /* line 35, ../sass/style.scss */

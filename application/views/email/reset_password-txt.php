@@ -1,17 +1,17 @@
-Hi<?php if (strlen($username) > 0) { ?> <?php echo $username; ?><?php } ?>,
+Bonjour<?php if (strlen($username) > 0) { ?> <?php echo $username; ?><?php } ?>,
 
-You have changed your password.
-Please, keep it in your records so you don't forget it.
+Vous avez changé votre mot de passe.
+S'il vous plaît, conservez-le précieusement en tête.
 <?php if (strlen($username) > 0) { ?>
 
-Your username: <?php echo $username; ?>
+Votre nom d'utilisateur : <?php echo $username; ?>
 <?php } ?>
 
-Your email address: <?php echo $email; ?>
+Votre adresse mail : <?php echo $email; ?>
 
 <?php /* Your new password: <?php echo $new_password; ?>
 
 */ ?>
 
-Thank you,
-The <?php echo $site_name; ?> Team
+Merci,
+<?php echo $site_name; ?> Team

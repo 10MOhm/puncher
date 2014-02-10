@@ -2,7 +2,7 @@
 {% block content %}
 
 	{% if must_fill %}
-		<p class="warning">Avant toute utilisation, vous devez saisir vos préférences. Sans elles, l'application ne peut calculer correctement ses statistiques.</p>
+		<p class="message">Avant toute utilisation, vous devez saisir vos préférences. Sans elles, l'application ne peut calculer correctement ses statistiques.</p>
 	{% endif %}
 	
 	<form id="preferences" method="post" action="/preferences">

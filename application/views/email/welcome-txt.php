@@ -1,20 +1,16 @@
-Welcome to <?php echo $site_name; ?>,
+Bienvenue sur <?php echo $site_name; ?>,
 
-Thanks for joining <?php echo $site_name; ?>. We listed your sign in details below. Make sure you keep them safe.
-Follow this link to login on the site:
+Merci de nous avoir rejoint <?php echo $site_name; ?>. Vous trouverez ci-après les détails de votre inscription. Gardez-les précieusement.
+Suivez le lien suivant pour vous connecter :
 
 <?php echo site_url('/auth/login/'); ?>
 
 <?php if (strlen($username) > 0) { ?>
 
-Your username: <?php echo $username; ?>
+Votre nom d'utilisateur : <?php echo $username; ?>
 <?php } ?>
 
-Your email address: <?php echo $email; ?>
+Votre adresse mail : <?php echo $email; ?>
 
-<?php /* Your password: <?php echo $password; ?>
-
-*/ ?>
-
-Have fun!
-The <?php echo $site_name; ?> Team
+Bonne utilisation !
+<?php echo $site_name; ?> Team

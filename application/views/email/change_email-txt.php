@@ -1,16 +1,18 @@
-Hi<?php if (strlen($username) > 0) { ?> <?php echo $username; ?><?php } ?>,
+Bonjour <?php if (strlen($username) > 0) { ?> <?php echo $username; ?><?php } ?>,
 
-You have changed your email address for <?php echo $site_name; ?>.
-Follow this link to confirm your new email address:
+Vous avez changé votre adresse mail pour <?php echo $site_name; ?>.
+Suivez le lien suivant pour confirmer votre adresse :
 
 <?php echo site_url('/auth/reset_email/'.$user_id.'/'.$new_email_key); ?>
 
 
-Your new email: <?php echo $new_email; ?>
+Votre nouvelle adresse mail : <?php echo $new_email; ?>
 
 
-You received this email, because it was requested by a <?php echo $site_name; ?> user. If you have received this by mistake, please DO NOT click the confirmation link, and simply delete this email. After a short time, the request will be removed from the system.
+Vous recevez ce mail suite à une requête d'un utilisateur de <?php echo $site_name; ?>. 
+Si vous avez reçu ce mail par erreur, NE cliquez PAS sur le lien de confirmation et supprimez ce mail. 
+Après une courte période, cette requête sera effacée du système.
 
 
-Thank you,
-The <?php echo $site_name; ?> Team
+Merci,
+<?php echo $site_name; ?> Team

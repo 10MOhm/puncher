@@ -1,9 +1,6 @@
 RewriteEngine On
 RewriteBase /htdocs
 
-RewriteCond %{HTTPS} off
-RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
-
 RewriteCond %{ENV:REDIRECT_STATUS} 200
 RewriteRule .* - [L]
 

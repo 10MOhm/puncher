@@ -7,8 +7,8 @@
 | These details are used in emails sent by authentication library.
 |--------------------------------------------------------------------------
 */
-$config['website_name'] = 'Time Manager';
-$config['webmaster_email'] = 'webmaster@ten.mohm.fr';
+$config['website_name'] = 'Puncher';
+$config['webmaster_email'] = 'ten.mohm@yahoo.fr';
 
 /*
 |--------------------------------------------------------------------------
