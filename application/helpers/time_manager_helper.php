@@ -13,6 +13,9 @@ function no_slash($var) {
 function to_slash($var) {
     return substr ( $var, 0, 2 ) . '/' . substr ( $var, 2, 2 ) . '/' . substr ( $var, 4, 4 );
 }
+function no_slash_to_xdate($var) {
+    return substr ( $var, 4, 4 ) . '-' . substr ( $var, 2, 2 ) . '-' . substr ( $var, 0, 2 );
+}
 
 /*
  * ---------------------------------------------------------------------------
@@ -21,6 +24,14 @@ function to_slash($var) {
  * 
  * ----------------------------------------------------------------------------
  */
+function french_to_international_date($date) {
+    $parts = explode("/", $date);
+    if (count($parts) != 3) {
+        return FALSE;
+    } 
+    return $parts[2]."/".$parts[1]."/".$parts[0];
+}
+
 function preferences_to_duration($preferences) {
     $hours = $preferences['hours'];
     $minutes = $preferences['minutes'];

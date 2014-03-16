@@ -8,6 +8,7 @@
 {% extends _layout %}
 
 {% block head %}
+    <script type="text/javascript" src="/js/lib/xdate.js"></script>
     <script type="text/javascript" src="/js/punches.js"></script>
 {% endblock %}
 
@@ -38,7 +39,7 @@
             {# Foreach day #}
             {% for date, day_checks in checks %}
             
-            <div class="day">
+            <div class="day {{ no_slash_to_xdate(no_slash(date)) }}">
                 
                 <p class="check_date">{{ date }}</p>
                 

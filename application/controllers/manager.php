@@ -21,6 +21,7 @@ class Manager extends CI_Controller {
         $this->twiggy->register_function('set_value');
         $this->twiggy->register_function('has_errors');
         $this->twiggy->register_function('no_slash');
+        $this->twiggy->register_function('no_slash_to_xdate');
         $this->twiggy->register_function('phpinfo');
         $this->twiggy->register_function('floor');
     }
@@ -140,7 +141,24 @@ class Manager extends CI_Controller {
                      * Cas d'un nouveau check
                      */
                     $is_new = TRUE;
-                    $new_check = $checks_to_display[to_slash($parts[0])][$parts[2] - 1];
+                    
+                    /*
+                     * If there were a previous check on the day the punch was added, we take 
+                     * the check in status, otherwise the check in status is set to false. 
+                     * The status will be inversed afterwards
+                     */
+//                     $previous_check = $checks_to_display[to_slash($parts[0])][$parts[2] - 1];
+                    $check_in_state = isset($checks_to_display[to_slash($parts[0])]) 
+                        && count($checks_to_display[to_slash($parts[0])]) > 0 && $parts[2] != 0 ? 
+                            $checks_to_display[to_slash($parts[0])][$parts[2] - 1]['check_in'] : 0;
+
+                    $new_date = french_to_international_date(to_slash($parts[0]));
+                    
+                    $new_check = array(
+                    	'user_id' => $this->tank_auth->get_user_id(),
+                        'date' => $new_date,
+                        'check_in' => $check_in_state
+                    );
                     
                     // If there isn't any new checks for the day yet ($parts[0] is the day)
                     if (!isset($checks_to_add[to_slash($parts[0])])) {
@@ -211,12 +229,20 @@ class Manager extends CI_Controller {
                     $ids_to_delete, $this->tank_auth->get_user_id());
                 $this->twiggy->set('success', TRUE);
         	}
+        	
+        	/*
+        	 * Trick to reorder the array keys after unset
+        	 */ 
+        	foreach ($checks_to_display as &$day) {
+        	   $day = array_values($day);
+        	}
+        	
+        	array_multisort($checks_to_display);
             
             // Updates the check in status after the datas have been saved (in case a check in or check out 
             // has been added for today)
         	$this->all_pages_action(__FUNCTION__);
         }
-
         $this->twiggy->set('checks', $checks_to_display, NULL);
         $this->twiggy->template('punches')->display();
     }
@@ -245,7 +271,8 @@ class Manager extends CI_Controller {
             and isset($checks[to_slash($parts[0])][$parts[2]])) 
             and isset($checks[to_slash($parts[0])][$parts[2] - 1]))
             or (isset($checks_to_add[to_slash($parts[0])])
-            and isset($checks_to_add[to_slash($parts[0])][$parts[2]]));
+            and isset($checks_to_add[to_slash($parts[0])][$parts[2]]))
+            or !isset($checks[to_slash($parts[0])]);
     }
 	
     /**
