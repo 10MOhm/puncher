@@ -143,7 +143,7 @@ class Time_manager {
         /*
          * Calulations
         */
-        $stats['periods']['all'] = $stats['periods']['month'];
+//         $stats['periods']['all'] = $stats['periods']['month'];
         $stats['periods']['all']['overtime_t'] += $last_overtime;
         $stats['periods']['all']['end_time'] = date("H:i:s", strtotime($stats['end_time']) - $stats['periods']['all']['overtime_t']);
         

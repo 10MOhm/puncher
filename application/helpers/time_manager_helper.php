@@ -290,14 +290,14 @@ function calculate_time_spent($checks) {
     $time_today = 0;
     $time_week = 0;
     $time_month = 0;
+    $time_all = 0;
     
     // Utils variables
     $last_check_out_time = strtotime ( 'now' );
     
     if (count ( $checks ) > 0 && $checks[0]['check_in']) {
         array_push ( $checks, 
-                array ('date' => date ( 'Y-m-d H:i:s', strtotime ( 'now' ) ),'check_in' => 0 
-                ) );
+                array ('date' => date ('Y-m-d H:i:s', strtotime('now')),'check_in' => 0));
     }
     
     // The checks are run in reverse order, we calculate the time spent between a check out and a check in
@@ -325,6 +325,8 @@ function calculate_time_spent($checks) {
             } else if (($date < $a_week_ago && $date >= $a_month_ago) ||
                      ($last_date >= $a_month_ago && $last_check_in == FALSE)) {
                 $time_month += $diff;
+            } else {
+                $time_all += $diff;
             }
         } else {
             $last_check_out_time = $time;
@@ -333,8 +335,13 @@ function calculate_time_spent($checks) {
     
     $time_week += $time_today;
     $time_month += $time_week;
+    $time_all += $time_month;
     
-    return array ('day' => $time_today,'week' => $time_week,'month' => $time_month 
+    return array(
+            'day' => $time_today,
+            'week' => $time_week,
+            'month' => $time_month,
+            'all' => $time_all
     );
 }
 
@@ -369,7 +376,7 @@ function count_days($checks) {
     $a_month_ago = string_to_stripped_date ( "first day of this month" );
     log_message('debug', 'Premier jour du mois : '.$a_month_ago);
     
-    $periods = array ('day' => 0,'week' => 0,'month' => 0);
+    $periods = array ('day' => 0,'week' => 0,'month' => 0,'all' => 0);
     
     $last_date = NULL;
     foreach ( $checks as $check ) {
@@ -386,12 +393,15 @@ function count_days($checks) {
                 log_message('debug', 'Week days : '.$periods['week']);
             } else if ($date[0] < $a_week_ago && $date[0] >= $a_month_ago) {
                 $periods['month'] ++;
+            } else {
+                $periods['all'] ++;
             }
         }
     }
     
     $periods['week'] += $periods['day'];
-    $periods['month'] += $periods['week'];    
+    $periods['month'] += $periods['week'];
+    $periods['all'] += $periods['month'];
 
     return $periods;
 }
