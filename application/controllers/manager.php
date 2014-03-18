@@ -117,6 +117,8 @@ class Manager extends CI_Controller {
             $checks_to_update = $checks_to_display;
             $checks_to_add = array();
             
+            $new_checks = array();
+            
         	/*
         	 * Foreach field, set code igniter validation rules and update the checks array
         	 */
@@ -131,49 +133,14 @@ class Manager extends CI_Controller {
                 /*
                  * Prevalidation and preformatting of the array in case of added punches
                  */
-                if (!$this->is_check_field_name_ok($parts)) 
-                {
-                    $prevalidation = FALSE;
-                }
-                else if ($this->is_new_check($parts, $checks_to_display, $checks_to_add))
-                {
+                if ($this->is_check_field_name_ok($parts)) {
                     /*
-                     * Cas d'un nouveau check
+                     * Map all input to a check array
                      */
-                    $is_new = TRUE;
-                    
-                    /*
-                     * If there were a previous check on the day the punch was added, we take 
-                     * the check in status, otherwise the check in status is set to false. 
-                     * The status will be inversed afterwards
-                     */
-//                     $previous_check = $checks_to_display[to_slash($parts[0])][$parts[2] - 1];
-                    $check_in_state = isset($checks_to_display[to_slash($parts[0])]) 
-                        && count($checks_to_display[to_slash($parts[0])]) > 0 && $parts[2] != 0 ? 
-                            $checks_to_display[to_slash($parts[0])][$parts[2] - 1]['check_in'] : 0;
-
-                    $new_date = french_to_international_date(to_slash($parts[0]));
-                    
-                    $new_check = array(
-                    	'user_id' => $this->tank_auth->get_user_id(),
-                        'date' => $new_date,
-                        'check_in' => $check_in_state
-                    );
-                    
-                    // If there isn't any new checks for the day yet ($parts[0] is the day)
-                    if (!isset($checks_to_add[to_slash($parts[0])])) {
-                        $checks_to_add[to_slash($parts[0])] = array();
+                    if (!isset($new_checks[to_slash($parts[0])])) {
+                        $new_checks[to_slash($parts[0])] = array();
                     }
-                    
-                    // Adds the check to the list only if it hasn't already been added
-                    if (!in_array($parts[2], array_keys($checks_to_add[to_slash($parts[0])]))) 
-                    {
-                        // Updates the check (makes sure check in follow check out etc.)
-                        $new_check['check_in'] = $new_check['check_in'] == 0 ? 1 : 0;
-                    
-                        $checks_to_display[to_slash($parts[0])][$parts[2]]= $new_check;
-                        $checks_to_add[to_slash($parts[0])][$parts[2]] = $new_check;
-                    }
+                    $new_checks[to_slash($parts[0])][$parts[2]][$parts[1]] = $field_value;
                 }
                 
                 /*
@@ -188,37 +155,47 @@ class Manager extends CI_Controller {
         		} else if (preg_match("/delete/", $field_name)) {
                     $delete = TRUE;
         		}
-                
-                /*
-                 * Updates the various tables to update
-                 */
-                if ($prevalidation) 
-                {
-                    if ($key != null) {
+        	}
+        	
+        	$checks_to_update = array();
+        	$checks_to_add = array();
+        	$ids_to_delete = array();
+        	
+        	/*
+        	 * Split checks into adds, updates, deletes
+        	 */
+        	foreach($new_checks as $day_key=>&$day) {
+        	    foreach ($day as $key=>&$check) {
+                    if (isset($checks_to_display[$day_key]) && isset($checks_to_display[$day_key][$key])) {
                         /*
-                         * UPDATE
+                         * Update or delete
                          */
-                        $checks_to_display[to_slash($parts[0])][$parts[2]][$key] = $field_value; 
+                        $check['id'] = $checks_to_display[$day_key][$key]['id'];
+                        $check['check_in'] = $checks_to_display[$day_key][$key]['check_in'];
+                        $check['user_id'] = $this->tank_auth->get_user_id();
+                        // 2014-03-10 21:33:00
+                        $check['date'] = date('y-m-d H:i:s', strtotime(french_to_international_date($day_key).' '.
+                                $check['hour'].':'.$check['minute']));
                         
-                        if ($is_new) {
-                            $checks_to_add[to_slash($parts[0])][$parts[2]][$key] = $field_value;
+                        if (isset($check['delete'])) {
+                            $ids_to_delete[] = $check['id'];
                         } else {
-                            $checks_to_update[to_slash($parts[0])][$parts[2]][$key] = $field_value;
+                            $checks_to_update[] = $check;
                         }
-                    } else if ($delete) {
+                    } else {
                         /*
-                         * DELETE
-                         *
-                         * If the field is new, then the deletion has no effect on the checks' array
-                         * and the prevalidation passes
+                         * Add
                          */
-                        if (!$is_new) {
-                            $ids_to_delete[] = $checks_to_display[to_slash($parts[0])][$parts[2]]['id'];
+                        $check['check_in'] = $key - 1 >= 0 ? !$day[$key - 1]['check_in'] : TRUE;
+                        $check['user_id'] = $this->tank_auth->get_user_id();
+                        // 2014-03-10 21:33:00
+                        $check['date'] = date('y-m-d H:i:s', strtotime(french_to_international_date($day_key).' '.
+                                $check['hour'].':'.$check['minute']));
+                        if (!isset($check['delete'])) {
+                            $checks_to_add[] = $check;
                         }
-                        
-                        unset($checks_to_display[to_slash($parts[0])][$parts[2]]);
                     }
-                }
+        	    }
         	}
         	
             /*
@@ -230,14 +207,7 @@ class Manager extends CI_Controller {
                 $this->twiggy->set('success', TRUE);
         	}
         	
-        	/*
-        	 * Trick to reorder the array keys after unset
-        	 */ 
-        	foreach ($checks_to_display as &$day) {
-        	   $day = array_values($day);
-        	}
-        	
-        	array_multisort($checks_to_display);
+        	$checks_to_display = $this->time_manager->get_all_checks($this->tank_auth->get_user_id());
             
             // Updates the check in status after the datas have been saved (in case a check in or check out 
             // has been added for today)

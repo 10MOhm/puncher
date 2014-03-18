@@ -3,14 +3,22 @@ $(function() {
 	$('.day').last().show();
     
     $('a#previous').click(function() {
-        if ($('.day').index($('.day:visible')) == 0) {
-        	add_day_before($('.day:visible'));
+    	
+    	// calculate class to display
+    	currentDate = new XDate($('.day:visible').attr('class').split(' ')[1]);
+        currentDate.addDays(-1);
+        if ($('.day.'+currentDate.toString('yyyy-MM-dd')).size() == 0) {
+        	add_day_before($('.day:visible'));        	
         }
         $('.day:visible').hide().prev().show();
         return false;
     });
     $('a#next').click(function() {
-        if ($('.day').index($('.day:visible')) == $('.day').length -1) {
+    	
+    	// calculate class to display
+    	currentDate = new XDate($('.day:visible').attr('class').split(' ')[1]);
+        currentDate.addDays(1);
+        if ($('.day.'+currentDate.toString('yyyy-MM-dd')).size() == 0) {
         	add_day_after($('.day:visible'));
         }
         $('.day:visible').hide().next().show();
@@ -32,19 +40,27 @@ function add_day_before(item) {
 	clone.attr('class', 'day ' + currentDate.toString('yyyy-MM-dd'));
 	clone.find('tr.check_time').remove();
 	clone.hide();
-	item.parent().prepend(clone);
-    $('a.button.add').click(add_row);
+	item.before(clone);
+	clone.find('a.button.add').click(add_row);
 }
 
 function add_day_after(item) {
-	
+	clone = item.clone();
+    currentDate = new XDate(item.attr('class').split(' ')[1]);
+    currentDate.addDays(1);
+	clone.find('.check_date').text(currentDate.toString('dd/MM/yyyy'));
+	clone.attr('class', 'day ' + currentDate.toString('yyyy-MM-dd'));
+	clone.find('tr.check_time').remove();
+	clone.hide();
+	clone.insertAfter(item);
+	clone.find('a.button.add').click(add_row);
 }
 
 function add_row() {
 	this_tr = $(this).closest('table').find('tr.check_time'); 
 	
 	new_tr = null;
-	has_check_that_day = this_tr.size() != 0
+	has_check_that_day = this_tr.size() != 0;
 	// If there is no tr for that day, create one from another day
 	if (!has_check_that_day) {
 		new_tr = $('tr.check_time').eq(0).clone();

@@ -161,15 +161,13 @@ function db_to_form_checks($checks) {
 function form_to_db_checks($checks, $is_to_add = FALSE) {
     $rearranged = array ();
     
-    foreach ( $checks as $day_checks ) {
-        foreach ( $day_checks as $check ) {
-            // If we're preparing the checks to add array the id can't be present
-            // (insert_batch won't work otherwise)
-            if ($is_to_add) {
-                unset ( $check['id'] );
-            }
-            $rearranged[] = update_time ( $check );
+    foreach ( $checks as $check ) {
+        // If we're preparing the checks to add array the id can't be present
+        // (insert_batch won't work otherwise)
+        if ($is_to_add) {
+            unset ( $check['id'] );
         }
+        $rearranged[] = update_time ( $check );
     }
     
     return $rearranged;
