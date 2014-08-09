@@ -111,7 +111,9 @@ class Checks extends CI_Model
         }
         
         // Update
-    	$this->db->update_batch(Checks::TABLE_NAME, $checks_to_update, 'id');
+        if (isset($checks_to_update) and count($checks_to_update) > 0) {
+    	   $this->db->update_batch(Checks::TABLE_NAME, $checks_to_update, 'id');
+        }
     }
     public function delete_checks($ids) {}
 

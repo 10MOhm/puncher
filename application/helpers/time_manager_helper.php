@@ -209,23 +209,20 @@ function update_time($check) {
 /**
  * Transforms db checks to a human readable csv
  * 
- * @param unknown $checks
+ * @param unknown $checks ascending order
  * @param array $stats
  * @return unkown either the csv as an array or false if the user's checks are corrputed
  */
 function checks_to_csv($checks, $stats) {
-    $csv = array (
-            array ("Date de check in","Date de check out","Heure de check in","Heure de check out",
-                    "temps passé" 
-            ) 
-    );
-    $e = '"';
-    $s = ';';
     
-    if (count ( $checks ) > 0 && $checks[0]['check_in']) {
-        array_push ( $checks, array ('date' => date ( 'Y-m-d H:i:s', strtotime ( 'now' ) ),'check_in' => 0 
-        ) );
-    } elseif (count ( $checks ) > 0 && ! $checks[0]['check_in']) {
+    // Set the headers
+    $csv = array (["Date de check in","Date de check out","Heure de check in","Heure de check out",
+                    "temps passé"]);
+
+    
+    // If the last check is a check in, delete it, the user is already supposed to have fixed it
+    if (count ( $checks ) > 0 && $checks[count($checks) - 1]['check_in']) {
+        array_shift($checks);
     }
     
     // Checks to CSV
@@ -253,9 +250,7 @@ function checks_to_csv($checks, $stats) {
     }
     
     $csv[] = array('','','Jours travaillés','Heures supplémentaires', 'Temps passé');
-    $csv[] = array(
-        '',
-        '',
+    $csv[] = array('','',
         $stats['periods']['month']['days_worked'],
         $stats['periods']['month']['overtime'], 
         $stats['periods']['month']['time_spent']

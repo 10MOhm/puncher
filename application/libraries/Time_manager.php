@@ -236,7 +236,7 @@ class Time_manager {
         $overtime_absolute = $working_time > 0 ? $stats['time_spent_t'] > $working_time : FALSE;
         
         return array ('is_user_checked_in' => $last_check['check_in'] ? TRUE : FALSE,
-                'is_export_needed' => $this->is_export_needed ( $last_check ), 
+                'is_export_needed' => $this->is_export_needed ( $last_check ),
                 'is_overtime_filled' => $working_time != NULL && count($working_time) > 0 ? TRUE : FALSE,
                 'ratio' => $stats['ratio'] < 1 ? $stats['ratio'] * 100 : ($stats['ratio'] - 1) * 100,
                 'overtime' => $overtime,
@@ -258,10 +258,15 @@ class Time_manager {
             
             $data = checks_to_csv($checks, $stats);
 	        $name = $month.'.csv';
+	        $raw_data = $checks;
+	        $raw_name = $month.'.raw.csv';
             
             return array(
+                'month' => $month,
                 'name' => $name,
-                'data' => $data
+                'data' => $data,
+                'raw_name' => $raw_name,
+                'raw' => $raw_data
             );
         }
         else {

@@ -15,6 +15,13 @@
 
 {% block content %}
 
+{% if add_check %}
+	<p class="message">
+	   Vous devez exporter vos données et votre dernier pointage est un check-in. 
+	   Supprimez le ou ajoutez un pointage pour pouvoir continuer.
+    </p>
+{% endif %}
+
 {% if validation_errors() is not empty %}
 <div class="wrong">
     {{ validation_errors() }}
