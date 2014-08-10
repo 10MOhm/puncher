@@ -43,6 +43,8 @@
 
         <form id="punches-form" method="post" action="/punches">
         
+            {% set index = 0 %}
+        
             {# Foreach day #}
             {% for date, day_checks in checks %}
             
@@ -58,7 +60,7 @@
                             
                             <td>
                                 {# Check Type Label #}
-                                {% if check.check_in %}
+                                {% if index % 2 == 0  %}
                                     <p>Check In</p>
                                 {% else %}
                                     <p>Check Out</p>
@@ -100,7 +102,9 @@
                                     
                                 <label for="{{ delete_field_name }}">X</label>
                             </td>
-                        </tr>		
+                        </tr>
+                        
+                        {% set index = index + 1 %}
                         {% endfor %}
                         <tr><td colspan="3" style="padding: 0;"><a href="" class="button add">+</a></td></tr>
                     </table>

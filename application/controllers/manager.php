@@ -179,7 +179,6 @@ class Manager extends CI_Controller {
                          * Update or delete
                          */
                         $check['id'] = $checks_to_display[$day_key][$key]['id'];
-                        $check['check_in'] = $checks_to_display[$day_key][$key]['check_in'];
                         $check['user_id'] = $this->tank_auth->get_user_id();
                         // 2014-03-10 21:33:00
                         $check['date'] = date('y-m-d H:i:s', 
@@ -196,7 +195,6 @@ class Manager extends CI_Controller {
                         /*
                          * Add
                          */
-                        $check['check_in'] = $key - 1 >= 0 ? ! $day[$key - 1]['check_in'] : TRUE;
                         $check['user_id'] = $this->tank_auth->get_user_id();
                         // 2014-03-10 21:33:00
                         $check['date'] = date('y-m-d H:i:s', 
@@ -320,14 +318,14 @@ class Manager extends CI_Controller {
             // Save the raw checks anyway for later use
             $raw_checks = array_to_csv($export['raw']);
             
+            // Delete all the checks
+            $this->time_manager->clean_after_export($this->tank_auth->get_user_id());
+            
             // Pack everything in a zip
             $this->load->library('zip');
             $this->zip->add_data($export['name'], $formated_checks);
             $this->zip->add_data($export['raw_name'], $raw_checks);
             $this->zip->download($export['month'] . '.zip');
-            
-            // Delete all the checks
-            $this->time_manager->clean_after_export($this->tank_auth->get_user_id());
         }
     }
     

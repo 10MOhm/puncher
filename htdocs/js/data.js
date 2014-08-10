@@ -15,6 +15,7 @@ $(function() {
     	var targetUrl = $(this).attr("href");
 
         $( "#dialog-confirm" ).dialog({
+        	width: 305,
 	    	buttons: {
 				"Exporter les pointages": function() {
 					$( this ).dialog( "close" );

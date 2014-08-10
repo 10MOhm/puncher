@@ -34,51 +34,6 @@ class Checks extends CI_Model
     }
 
     /**
-     * Gets all the checks of a user for the present day (including today if last punch was a check in) 
-     * @param $user_id
-     * @return an array of checks
-     */
-    public function get_todays_checks($user_id) {
-        $checks = NULL;
-        if (!empty($user_id)) {
-        
-            $where_date = $this->today();
-            
-            $this->db->order_by("date", "asc");
-            $this->db->where("date >=", $where_date);
-            $this->db->where("user_id", $user_id);
-            $query = $this->db->get(Checks::TABLE_NAME);
-            $checks = $query->result_array();
-            
-            // Gets the last check of the day before in case there were no checks 
-            // today or if the user forgot to checkout the day before
-            $this->db->order_by("date", "desc");
-            $this->db->where("date <", $where_date);
-            $query = $this->db->get(Checks::TABLE_NAME,1,0);
-            $last_check = $query->row_array();
-            
-            // Handle the case where the first check of the day is a check out
-            // TODO: Should the app calculate the time between last check in and first check out if
-            // the last check in was day(s) before?
-            if (count($checks) > 0 && $checks[0]['check_in'] == 0 
-                && count($last_check) > 0) {
-                if ($last_check['check_in'] == 0) {
-                    log_message('error', "Les checks de l'utilisateur $user_id sont erronés : ".print_r($query->result_array(), True));
-                    // TODO: Handle the null return upper in the chain
-                } else {
-                    array_unshift($checks, $last_check);
-                }
-            }
-        }
-        else {
-            log_message('error', "User id vide");
-        }
-        return $checks;
-    }
-    
-    
-
-    /**
      * Returns the last check value
      * @param $user_id
      * @return array last check (NULL if not found)
@@ -87,6 +42,20 @@ class Checks extends CI_Model
         $result = NULL;
         if (!empty($user_id)) {
             $this->db->order_by("date", "desc");
+            $this->db->where("user_id", $user_id);
+            $query = $this->db->get(Checks::TABLE_NAME,1,0);
+            if ($query->num_rows() == 1) $result = $query->result_array()[0];
+        }
+        else {
+            log_message('error', "User id vide");
+        }
+        return $result;
+    }
+    
+    public function get_first_check($user_id) {
+        $result = NULL;
+        if (!empty($user_id)) {
+            $this->db->order_by("date", "asc");
             $this->db->where("user_id", $user_id);
             $query = $this->db->get(Checks::TABLE_NAME,1,0);
             if ($query->num_rows() == 1) $result = $query->result_array()[0];
@@ -116,17 +85,15 @@ class Checks extends CI_Model
         }
     }
     public function delete_checks($ids) {}
-
+    
     /**
      * Creates a check in for the user specified
-     * @param boolean $is_check_in true for in false for out
      * @param unknown $user_id the user's id
      */
-    public function create($is_check_in, $user_id) {
+    public function create($user_id) {
     
         if (!empty($user_id)) {
             $data = array(
-                    'check_in' => $is_check_in,
                     'date' => date("Y-m-d H:i:s"),
                     'user_id' => $user_id
                     );
