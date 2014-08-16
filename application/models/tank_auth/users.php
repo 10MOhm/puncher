@@ -86,6 +86,15 @@ class Users extends CI_Model
 		if ($query->num_rows() == 1) return $query->row();
 		return NULL;
 	}
+	
+	/**
+	 * Returns all the users ids
+	 * @return list
+	 */
+	function get_users_ids() {
+	    $this->db->select('id');
+	    return $this->db->get($this->table_name)->result_array();
+	}
 
 	/**
 	 * Check if username available for registering

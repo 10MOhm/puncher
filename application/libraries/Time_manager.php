@@ -19,6 +19,7 @@ class Time_manager {
         $this->ci->load->model('time_manager/overtime');
         $this->ci->load->model('time_manager/parameters');
         $this->ci->load->model('time_manager/staticPage');
+		$this->ci->load->model('tank_auth/users');
         $this->ci->load->model('time_manager/userHasNews');
         $this->ci->load->helper('time_manager_helper');
     }
@@ -280,20 +281,23 @@ class Time_manager {
     /**
      * Get all the site informations from the DB
      */
-    public function get_informations() {
+    public function get_informations($user_id = NULL) {
+        if ($user_id != NULL)
+            $this->ci->userHasNews->read_informations($user_id);
         return $this->ci->staticPage->get_informations();
     }
 
     /**
      * Updates the site informations
-     * 
+     *
      * @param unknown $informations the informations (in html format)
      * @param unknown $changes the number of changes made, used to add a notice on the information page
      */
     public function update_informations($informations, $changes) {
         $this->ci->staticPage->update_informations($informations);
+        $users_ids = $this->ci->users->get_users_ids();
         $page_id = $this->ci->staticPage->get_information_page_id();
-        $this->ci->userHasNews->add_unread_information($changes, $page_id);
+        $this->ci->userHasNews->add_unread_information($changes, $page_id, $users_ids);
     }
 }
 
