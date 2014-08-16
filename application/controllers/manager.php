@@ -342,7 +342,7 @@ class Manager extends CI_Controller {
     }
 
     public function info() {
-        $informations = $this->time_manager->get_informations();
+        $informations = $this->time_manager->get_informations($this->tank_auth->get_user_id());
         $this->twiggy->set("navigation_items", NavItems::NotLoggedIn());
         $this->twiggy->set("informations", $informations);
         
