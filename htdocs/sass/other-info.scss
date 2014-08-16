@@ -126,3 +126,18 @@
 	    }
 	}
 }
+
+// Admin mode
+.admin_mode .other-info #oi-content {
+	h1 {
+		padding: 5px 8px;
+		input {border: none; background: none; color: white; text-align: left; width: 100%;}
+	}
+	
+	#cke_infos {border: none; margin-top: 8px;}
+/* 	iframe.cke_wysiwyg_frame.cke_reset {width: 101% !important; height: 101% !important;} */
+	
+	#info-form {
+	   input[type="submit"] {width: 100%; margin-top: 10px;}
+	}
+}

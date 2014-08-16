@@ -125,3 +125,30 @@
   text-align: center;
   border-radius: 5px;
 }
+
+/* line 131, ../sass/other-info.scss */
+.admin_mode .other-info #oi-content {
+  /* 	iframe.cke_wysiwyg_frame.cke_reset {width: 101% !important; height: 101% !important;} */
+}
+/* line 132, ../sass/other-info.scss */
+.admin_mode .other-info #oi-content h1 {
+  padding: 5px 8px;
+}
+/* line 134, ../sass/other-info.scss */
+.admin_mode .other-info #oi-content h1 input {
+  border: none;
+  background: none;
+  color: white;
+  text-align: left;
+  width: 100%;
+}
+/* line 137, ../sass/other-info.scss */
+.admin_mode .other-info #oi-content #cke_infos {
+  border: none;
+  margin-top: 8px;
+}
+/* line 141, ../sass/other-info.scss */
+.admin_mode .other-info #oi-content #info-form input[type="submit"] {
+  width: 100%;
+  margin-top: 10px;
+}

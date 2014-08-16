@@ -1,36 +1,33 @@
 {% extends "_layouts/other_info.html.twig" %}
 
+{% block head %}
+    <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/js/info.js"></script>
+{% endblock %}
+
 {% block content %}
-	<h1>Nos garanties</h1>
-    <h2>Anonymat</h2>
-    <ul>
-        <li>Seuls votre email et mot de passe sont conservés</li>
-        <li>Votre mot de passe ne peut pas être récupéré par quelqu'un qui accède à la base de données (mot de passe "haché")</li>
-{#         <li>Le service est accessible en HTTPS, vérifiez l'url. Si vous accédez au service en HTTPS, toute communication entre vous et le site est cryptée. Vous êtes protégé des yeux indiscrets</li>#}
-    </ul>
-    <h2>Protection des données</h2>
-    <ul>
-        <li>Vos pointages ne sont conservés que pendant un mois.</li>
-    </ul>
+
+    {# Administration de la page d'informations #}
+    {% if admin_mode == 'admin_mode' %}
     
-	<h1>Nos conseils</h1>
-    <h2>Renforcez votre anonymat</h2>
-    <ul>
-        <li>Utilisez une adresse email jetable ou anonyme</li>
-{#         <li>Vérifiez que l'url commence par https</li>#}
-    </ul>
-    <h2>Protégez vos données</h2>
-    <ul>
-        <li>Gardez les fichiers excels de pointage dans un endroit sécurisé. Un duplicata ne pourra vous être fourni.</li>
-    </ul>
-    <h2>Connaissez vos droits</h2>
-    <ul>
-        <li>Suivez la communication syndicale!</li>
-        <li>Quand checkouter?* Le midi et le soir. Une pause est légalement caractérisée comme une période où le salarié peut vaquer à ses occupations sans que l'employeur ne puisse lui demander de retourner travailler. 
-            C'est le cas de la pause de midi. Ce n'est pas le cas de la pause café ou clopes!
-        </li>
-    </ul>
-    
-    <p>* Checkouter : Néologisme pour symboliser l'arrêt du décompte du temps de travail. L'arrêt de la pointeuse. La sortie du travail.</p>
+    {# Erreurs de validation du formulaire #}
+	{% if validation_errors() is not empty %}
+	<div class="wrong">
+	    {{ validation_errors() }}
+	</div>
+	{% endif %}
+	
+    <form id="info-form" method="post" action="/info">
+        <p>
+            <label for="changes-number">Nombre de nouveautés&nbsp;: </label>
+            <input type="text" name="changes-number" size="1" maxlength="1"/>
+        </p>
+        <textarea id="infos" name="infos" rows="100">{{ informations }}</textarea>
+        
+        <input type="submit" value="Enregistrer" />
+    </form>
+    {% else %}
+    {{ informations }}
+    {% endif %}
     
 {% endblock %}

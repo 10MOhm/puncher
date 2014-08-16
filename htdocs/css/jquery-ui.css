@@ -3,6 +3,41 @@
 * Includes: jquery.ui.core.css, jquery.ui.resizable.css, jquery.ui.button.css, jquery.ui.dialog.css, jquery.ui.progressbar.css, jquery.ui.tooltip.css, jquery.ui.theme.css
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Verdana%2CArial%2Csans-serif&fwDefault=normal&fsDefault=1.1em&cornerRadius=6px&bgColorHeader=444444&bgTextureHeader=highlight_soft&bgImgOpacityHeader=44&borderColorHeader=333333&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=000000&bgTextureContent=loop&bgImgOpacityContent=25&borderColorContent=555555&fcContent=ffffff&iconColorContent=cccccc&bgColorDefault=222222&bgTextureDefault=highlight_soft&bgImgOpacityDefault=35&borderColorDefault=444444&fcDefault=eeeeee&iconColorDefault=cccccc&bgColorHover=003147&bgTextureHover=highlight_soft&bgImgOpacityHover=33&borderColorHover=0b93d5&fcHover=ffffff&iconColorHover=ffffff&bgColorActive=0972a5&bgTextureActive=highlight_hard&bgImgOpacityActive=20&borderColorActive=26b3f7&fcActive=ffffff&iconColorActive=222222&bgColorHighlight=eeeeee&bgTextureHighlight=highlight_soft&bgImgOpacityHighlight=80&borderColorHighlight=cccccc&fcHighlight=2e7db2&iconColorHighlight=4b8e0b&bgColorError=ffc73d&bgTextureError=glass&bgImgOpacityError=40&borderColorError=ffb73d&fcError=111111&iconColorError=a83300&bgColorOverlay=5c5c5c&bgTextureOverlay=flat&bgImgOpacityOverlay=50&opacityOverlay=80&bgColorShadow=cccccc&bgTextureShadow=flat&bgImgOpacityShadow=30&opacityShadow=60&thicknessShadow=7px&offsetTopShadow=-7px&offsetLeftShadow=-7px&cornerRadiusShadow=8px
 * Copyright 2013 jQuery Foundation and other contributors; Licensed MIT */
+/* line 31, ../sass/variables.scss */
+.beveled-bg {
+  background-color: #1C1C1C;
+  background: linear-gradient(210deg, transparent 26px, #1c1c1c 20px);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 8px;
+  color: white;
+  border-left: 4px solid #0062a8;
+  border-bottom: 1px solid #0062a8;
+  line-height: 1em !important;
+}
+/* line 42, ../sass/variables.scss */
+.overtime.checked_in .beveled-bg {
+  border-color: #dc7000;
+}
+/* line 43, ../sass/variables.scss */
+.overtime_absolute.checked_in .beveled-bg {
+  border-color: #cb0000;
+}
+
+/* line 46, ../sass/variables.scss */
+strong {
+  font-weight: bold;
+  color: #0095FF;
+}
+/* line 49, ../sass/variables.scss */
+.overtime.checked_in strong {
+  color: #FF9500 !important;
+}
+/* line 50, ../sass/variables.scss */
+.overtime_absolute.checked_in strong {
+  color: #FF0000 !important;
+}
+
 /* Layout helpers
 ----------------------------------*/
 /* line 15, ../sass/jquery-ui.scss */

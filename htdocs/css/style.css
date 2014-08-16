@@ -1,11 +1,11 @@
 /*
 Syntax error: Undefined mixin 'background-image'.
-        on line 27 of D:/Projets/Wampstack/apps/time_manager/htdocs/sass/style.scss, in `background-image'
-        from line 27 of D:/Projets/Wampstack/apps/time_manager/htdocs/sass/style.scss
+        on line 27 of D:/Projets/Wampstack/apps/puncher/htdocs/sass/style.scss, in `background-image'
+        from line 27 of D:/Projets/Wampstack/apps/puncher/htdocs/sass/style.scss
 
 Backtrace:
-D:/Projets/Wampstack/apps/time_manager/htdocs/sass/style.scss:27:in `background-image'
-D:/Projets/Wampstack/apps/time_manager/htdocs/sass/style.scss:27
+D:/Projets/Wampstack/apps/puncher/htdocs/sass/style.scss:27:in `background-image'
+D:/Projets/Wampstack/apps/puncher/htdocs/sass/style.scss:27
 C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:253:in `visit_mixin'
 C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/sass-3.2.13/lib/sass/tree/visitors/base.rb:37:in `visit'
 C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/sass-3.2.13/lib/sass/tree/visitors/perform.rb:100:in `visit'
@@ -74,4 +74,4 @@ C:/Ruby200-x64/bin/compass:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'background-image'.\A         on line 27 of D:/Projets/Wampstack/apps/time_manager/htdocs/sass/style.scss, in `background-image'\A         from line 27 of D:/Projets/Wampstack/apps/time_manager/htdocs/sass/style.scss"; }
+  content: "Syntax error: Undefined mixin 'background-image'.\A         on line 27 of D:/Projets/Wampstack/apps/puncher/htdocs/sass/style.scss, in `background-image'\A         from line 27 of D:/Projets/Wampstack/apps/puncher/htdocs/sass/style.scss"; }

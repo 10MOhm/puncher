@@ -426,8 +426,6 @@ function overtime_to_chart_array($db_overtime, $working_time) {
         $overtime = array (array ("Date","Heures supplémentaires" ) );
         
         foreach ( $db_overtime as $row ) {
-            log_message('debug', $row['amount']);
-            log_message('debug', $working_time);
             $overtime[] = array (date('m-Y', strtotime($row['date'])),
                     duration_to_days($row['amount'], $working_time) );
         }

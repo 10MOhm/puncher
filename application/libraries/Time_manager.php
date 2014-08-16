@@ -18,6 +18,8 @@ class Time_manager {
         $this->ci->load->model('time_manager/checks');
         $this->ci->load->model('time_manager/overtime');
         $this->ci->load->model('time_manager/parameters');
+        $this->ci->load->model('time_manager/staticPage');
+        $this->ci->load->model('time_manager/userHasNews');
         $this->ci->load->helper('time_manager_helper');
     }
 
@@ -218,8 +220,7 @@ class Time_manager {
         $total = ( int ) (($end_of_month - $beginning_month) / (24 * 3600));
         
         return array ('number_of_checks' => $this->ci->checks->count_checks($user_id),
-                'percent_month' => ( int ) ($diff * 100 / $total) 
-        );
+                'percent_month' => ( int ) ($diff * 100 / $total) );
     }
 
     /**
@@ -243,8 +244,8 @@ class Time_manager {
                 'is_export_needed' => $this->is_export_needed($first_check),
                 'is_overtime_filled' => $working_time != NULL && count($working_time) > 0 ? TRUE : FALSE,
                 'ratio' => $stats['ratio'] < 1 ? $stats['ratio'] * 100 : ($stats['ratio'] - 1) * 100,
-                'overtime' => $overtime,'overtime_absolute' => $overtime_absolute 
-        );
+                'overtime' => $overtime,'overtime_absolute' => $overtime_absolute,
+                'unread_messages' => $this->ci->userHasNews->count($user_id) );
     }
 
     public function get_csv_export($user_id) {
@@ -266,8 +267,7 @@ class Time_manager {
             $raw_name = $month . '.raw.csv';
             
             return array ('month' => $month,'name' => $name,'data' => $data,'raw_name' => $raw_name,
-                    'raw' => $raw_data 
-            );
+                    'raw' => $raw_data );
         } else {
             return NULL;
         }
@@ -275,6 +275,25 @@ class Time_manager {
 
     public function clean_after_export($user_id) {
         $checks = $this->ci->checks->clean_checks($user_id);
+    }
+
+    /**
+     * Get all the site informations from the DB
+     */
+    public function get_informations() {
+        return $this->ci->staticPage->get_informations();
+    }
+
+    /**
+     * Updates the site informations
+     * 
+     * @param unknown $informations the informations (in html format)
+     * @param unknown $changes the number of changes made, used to add a notice on the information page
+     */
+    public function update_informations($informations, $changes) {
+        $this->ci->staticPage->update_informations($informations);
+        $page_id = $this->ci->staticPage->get_information_page_id();
+        $this->ci->userHasNews->add_unread_information($changes, $page_id);
     }
 }
 

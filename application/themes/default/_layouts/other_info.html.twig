@@ -13,13 +13,13 @@
 		<link rel="stylesheet" href="/css/ie.css">
 		<![endif]-->
         
-        <script type="text/javascript" src="/js/lib/jquery-1.9.0.js"></script>
+        <script type="text/javascript" src="/js/lib/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="/js/utils.js"></script>
 		{% block head %}
 		{% endblock %}
 	</head>
-	<body>
-		<div id="wrapper" class="{{checked_in}} other-info ">
+	<body class="{{ admin_mode }}">
+		<div id="wrapper" class="{{checked_in}} other-info">
             <div id="oi-machine" class="has_light">
                 <a id="puncher-button" href="/" title="Accueil">
                     <span>&#xF011;</span> Puncher !

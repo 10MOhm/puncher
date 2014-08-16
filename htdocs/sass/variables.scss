@@ -16,6 +16,8 @@ $bottom-button-color     : #111;
 $button-color            : #222;
 $active-button-color     : #0062A8;
 $puncher-section-size    : 130px;
+$bg-orange               : #DC7000;
+$bg-red                  : #CB0000;
 
 @mixin beveled {
     background-color: $active-button-color;
@@ -24,4 +26,26 @@ $puncher-section-size    : 130px;
     background-repeat:no-repeat;
     padding: 8px 5px;
     color: white;
+}
+
+.beveled-bg {
+    background-color: #1C1C1C;
+    background:linear-gradient(210deg, transparent 26px, #1C1C1C 20px);
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    padding: 8px;
+    color: white;
+    border-left: 4px solid $active-button-color;
+    border-bottom: 1px solid $active-button-color;
+    line-height: 1em !important;
+    
+    .overtime.checked_in & { border-color: $bg-orange;}
+    .overtime_absolute.checked_in & { border-color: $bg-red;} 
+}
+
+strong {
+    font-weight: bold;
+    color: #0095FF;
+    .overtime.checked_in & { color: #FF9500 !important;}
+    .overtime_absolute.checked_in & { color: #FF0000 !important;}
 }

@@ -61,6 +61,7 @@ class Manager extends CI_Controller {
         $this->twiggy->set("ratio", $data['ratio'], $global = FALSE);
         $this->twiggy->set("overtime", $overtime, $global = FALSE);
         $this->twiggy->set("overtime_absolute", $overtime_absolute, $global = FALSE);
+        $this->twiggy->set("unread_messages", $data['unread_messages'], $global = FALSE);
     }
 
     /**
@@ -84,9 +85,10 @@ class Manager extends CI_Controller {
             $this->twiggy->set('must_fill', $fill, NULL);
         }
         
-        if ($this->input->post()) {
-            $this->load->helper(array ('form','url' 
-            ));
+        if ($this->input->post()) 
+        
+        {
+            $this->load->helper(array ('form','url' ));
             
             if ($this->form_validation->run('preferences') == TRUE) {
                 $preferences = $this->fill_preferences_array();
@@ -95,7 +97,9 @@ class Manager extends CI_Controller {
             } else {
                 $preferences = $this->fill_preferences_array();
             }
-        } else {
+        } else 
+        
+        {
             $preferences = $this->time_manager->get_preferences($this->tank_auth->get_user_id());
         }
         
@@ -260,8 +264,7 @@ class Manager extends CI_Controller {
      * @return array the preferences array to be stored in the db
      */
     private function fill_preferences_array() {
-        return array ('hours' => set_value('hours'),'minutes' => set_value('minutes') 
-        );
+        return array ('hours' => set_value('hours'),'minutes' => set_value('minutes') );
     }
 
     /**
@@ -328,7 +331,7 @@ class Manager extends CI_Controller {
             $this->zip->download($export['month'] . '.zip');
         }
     }
-    
+
     private function add_error_for_user($error) {
         // TODO ajouter un message d'erreur pour l'utilisateur
     }
@@ -339,11 +342,27 @@ class Manager extends CI_Controller {
     }
 
     public function info() {
-        if (! $this->tank_auth->is_logged_in()) {
-            $this->twiggy->set("navigation_items", NavItems::NotLoggedIn());
-        } else {
+        $informations = $this->time_manager->get_informations();
+        $this->twiggy->set("navigation_items", NavItems::NotLoggedIn());
+        $this->twiggy->set("informations", $informations);
+        
+        // If User logged in, special navigation items and possibility to edit the informations
+        if ($this->tank_auth->is_logged_in()) {
+            
+            $is_admin = $this->tank_auth->get_user_id() == 1;
+            
             $this->twiggy->set("navigation_items", NavItems::LoggedIn());
+            $this->twiggy->set("admin_mode", $is_admin ? "admin_mode" : "");
+            
+            // Edit the informations
+            if ($is_admin && $this->input->post() && $this->form_validation->run('infos') == TRUE) {
+                $changes = $this->input->post("changes-number", TRUE);
+                $informations = $this->input->post("infos", TRUE);
+                $informations = $this->time_manager->update_informations($informations,$changes);
+                redirect('/info');
+            }
         }
+        
         $this->twiggy->template('info')->display();
     }
 }
