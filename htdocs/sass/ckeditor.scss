@@ -1,0 +1,32 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "variables.scss";
+
+html {
+    background: url(../images/escheresque_ste.png);
+    color: $text-color;
+    body {
+        margin-top: 10px;
+        font-size: 0.9em;
+        font-family: sans-serif;
+    }
+    h1 {
+        @extend .beveled-bg;
+        margin: 1em 0 1em;
+        &:first-child { margin-top: 0;}
+    }
+    h2 {
+        @extend strong;
+        margin: 1em 0.7em 0.5em;
+    }
+    
+    ul { 
+        margin: 0 0 0 2em;
+        
+        li {
+            list-style: disc;
+            margin-bottom: 0.3em;
+        }
+    }
+    
+}
