@@ -9,7 +9,7 @@ if (! defined('BASEPATH'))
  * @package Time_manager
  * @author ten.mohm
  */
-class UserHasNews extends CI_Model {
+class User_has_news extends CI_Model {
     const TABLE_NAME = "user_has_news";
 
     /**

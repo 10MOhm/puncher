@@ -10,7 +10,7 @@ if (! defined('BASEPATH'))
  * @package Time_manager
  * @author ten.mohm
  */
-class StaticPage extends CI_Model {
+class Static_page extends CI_Model {
     const TABLE_NAME = "static_page";
     const INFORMATION_PAGE = "informations";
     
