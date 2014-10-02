@@ -18,7 +18,7 @@ class Time_manager {
         $this->ci->load->model('time_manager/checks');
         $this->ci->load->model('time_manager/overtime');
         $this->ci->load->model('time_manager/parameters');
-        $this->ci->load->model('time_manager/staticPage');
+        $this->ci->load->model('time_manager/static_page');
 		$this->ci->load->model('tank_auth/users');
         $this->ci->load->model('time_manager/userHasNews');
         $this->ci->load->helper('time_manager_helper');
@@ -284,7 +284,7 @@ class Time_manager {
     public function get_informations($user_id = NULL) {
         if ($user_id != NULL)
             $this->ci->userHasNews->read_informations($user_id);
-        return $this->ci->staticPage->get_informations();
+        return $this->ci->static_page->get_informations();
     }
 
     /**
@@ -294,9 +294,9 @@ class Time_manager {
      * @param unknown $changes the number of changes made, used to add a notice on the information page
      */
     public function update_informations($informations, $changes) {
-        $this->ci->staticPage->update_informations($informations);
+        $this->ci->static_page->update_informations($informations);
         $users_ids = $this->ci->users->get_users_ids();
-        $page_id = $this->ci->staticPage->get_information_page_id();
+        $page_id = $this->ci->static_page->get_information_page_id();
         $this->ci->userHasNews->add_unread_information($changes, $page_id, $users_ids);
     }
 }
